@@ -1,0 +1,287 @@
+node {
+  name: "import/my_placeholder"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 1
+        }
+        dim {
+          size: 1
+        }
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense1/kernel"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+        }
+        float_val: 0.4203883409500122
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense1/kernel/read"
+  op: "Identity"
+  input: "import/my_dense1/kernel"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@import/my_dense1/kernel"
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense1/bias"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense1/bias/read"
+  op: "Identity"
+  input: "import/my_dense1/bias"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@import/my_dense1/bias"
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense1/MatMul"
+  op: "MatMul"
+  input: "import/my_placeholder"
+  input: "import/my_dense1/kernel/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "transpose_a"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "transpose_b"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "import/my_dense1/BiasAdd"
+  op: "BiasAdd"
+  input: "import/my_dense1/MatMul"
+  input: "import/my_dense1/bias/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+}
+node {
+  name: "import/my_dense3/kernel"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 9
+          }
+        }
+        tensor_content: "@\361\203\275\230?\313>\020\377\016\275p\277\214\275j\222\000?\0049\314\276P\r\216>\010\326\233>\200\000\017\276"
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense3/kernel/read"
+  op: "Identity"
+  input: "import/my_dense3/kernel"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@import/my_dense3/kernel"
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense3/bias"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 9
+          }
+        }
+        tensor_content: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense3/bias/read"
+  op: "Identity"
+  input: "import/my_dense3/bias"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@import/my_dense3/bias"
+      }
+    }
+  }
+}
+node {
+  name: "import/my_dense3/MatMul"
+  op: "MatMul"
+  input: "import/my_dense1/BiasAdd"
+  input: "import/my_dense3/kernel/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "transpose_a"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "transpose_b"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "import/my_dense3/BiasAdd"
+  op: "BiasAdd"
+  input: "import/my_dense3/MatMul"
+  input: "import/my_dense3/bias/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+}
+versions {
+}
