@@ -13,6 +13,7 @@ gcc main.c inference_engine.c -I. -ltensorflow -o main
 ```
 
 main.c is the main application which is using the inferencing functionality.
+
 inference_engine.c/h contain all the utility functions for performing TensorFlow inferencing.
 
 ### Caveats: 
