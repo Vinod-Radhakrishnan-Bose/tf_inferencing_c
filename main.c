@@ -7,15 +7,15 @@ int main() {
     // Hardcode the model filename for now. 
     // Assumptions: This model takes in a 0-dim float tensor of size 1 and returns a 0-dim float tensor of size 1.
     static char *graph_file_name = "inference.pb";
-    inference_engine_t t_inference_engine;
+    inference_engine_t t_inference_engine; // structure holding all information needed for performing information.
     float input_data[] = {3.0f}; // Feed dummy data. This will come from external application in the future.
     float output_results;
 
     // Initialize the inference engine by providing the model graph file as input
     InitializeInferenceEngine(&t_inference_engine, 
-                              graph_file_name,
-                              "my_placeholder",
-                              "my_dense3/kernel");
+                              graph_file_name,  // model file name
+                              "my_placeholder", // input node name
+                              "my_dense3/kernel"); // output node name
 
     // Run this within a loop for every fresh data sample. Fresh input data should be provided
     // within input_data, and outputs can be fetched from output_results.
